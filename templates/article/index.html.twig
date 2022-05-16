@@ -4,6 +4,9 @@
 
 {% block body %}
 
+<a href="{{ path('app_create') }}">Creer nouvelle article</a> 
+
+
 <h1> {{ nombreArticle(article|length, 'article', 'articles') }}</h1>
 
 {% for articles in article %}
@@ -12,6 +15,7 @@
         <h2>{{ articles.NomProduit }}</h2>
         <h3>{{ articles.Description }}</h3>
     </article>
+        <a href="{{ path('app_show_article', {id : articles.id}) }}">Details</a>
     
     </br>
 {% endfor %}

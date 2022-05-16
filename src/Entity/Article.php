@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Article
 {
     #[ORM\Id]
@@ -18,6 +20,12 @@ class Article
 
     #[ORM\Column(type: 'text')]
     private $Description;
+
+    #[ORM\Column(type: 'datetime_immutable', options:["default" => "CURRENT_TIMESTAMP"])]
+    private $createdAt;
+
+    #[ORM\Column(type: 'datetime_immutable', options:["default" => "CURRENT_TIMESTAMP"])]
+    private $updateAt;
 
     public function getId(): ?int
     {
@@ -47,4 +55,41 @@ class Article
 
         return $this;
     }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeImmutable
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(\DateTimeImmutable $updateAt): self
+    {
+        $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+
+    public function updateTimestamp()
+    {
+        if ($this->getCreatedAt() === null){
+            $this->setCreatedAt(new \DateTimeImmutable);
+        }
+        $this->setUpdateAt(new \DateTimeImmutable);
+    }
+
+   
 }

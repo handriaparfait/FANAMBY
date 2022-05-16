@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block title 'Edit Article ' ~ article.Id %}
+
+{% block body %}
+
+
+{{ form_start(formulaire) }}
+    {{ form_widget(formulaire) }}
+
+    <input type="submit" value="editer">
+{{ form_start(formulaire) }}
+
+{% endblock %}

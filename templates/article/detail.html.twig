@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title article.NomProduit  %}
+
+{% block body %}
+
+
+    <a href="{{path('app_article')}}">Home</a><br>
+    <a href="{{path('app_create')}}">Creer une article</a>
+
+    <article>
+        <h3>{{ article.NomProduit }}</h3>
+        <p>{{ article.Description }}</p>
+    </article>
+
+    <a href="{{path('app_article_edit', {id: article.Id})}}">Editer l'article</a><br>
+    <a href="#" onclick="event.preventDefault(); confirm('Vous êtes sur?') && document.getElementById('form-article-delete').submit();">Effacer l'article</a>
+    <form id="form-article-delete" action="{{path('app_article_delete', {id: article.Id})}}" style="display:none;">
+                <input type="hidden" name="_method" value="DELETE">
+
+    </form>
+
+
+{% endblock %}
